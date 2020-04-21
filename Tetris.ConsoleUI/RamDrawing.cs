@@ -15,7 +15,7 @@ namespace Tetris.ConsoleUI
             Surface = RGBSurface.Instance;
             Surface.Exception += SurfaceOnException;
             Surface.LoadDevices(CorsairDeviceProvider.Instance);
-            Ram = Surface.Devices.Where(d => d.DeviceInfo.DeviceType == RGBDeviceType.DRAM).Take(2).ToList();
+            Ram = Surface.Devices.Where(d => d.DeviceInfo.DeviceType == RGBDeviceType.DRAM).ToList();
 
             var width = Ram.Count;
             var height = Ram.Max(r => r.Count());
