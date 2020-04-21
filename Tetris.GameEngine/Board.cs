@@ -14,7 +14,7 @@ namespace Tetris.GameEngine
 
         public Board(int width, int height)
         {
-            if ( ( width >= 10 ) && ( height >= 20 ) )
+            if ( ( width >= 2 ) && ( height >= 6 ) )
             {
                 _mBoard = new int[height, width];
                 for (int i = 0; i < _mBoard.GetUpperBound(0) + 1; i++)
@@ -27,7 +27,7 @@ namespace Tetris.GameEngine
             }
             else
             {
-                throw new ArgumentException("Board must be at least 10x20");
+                throw new ArgumentException("Board must be at least 2x6");
             }
         }
 

@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Tetris.GameEngine;
 using System.Timers;
+using Tetris.ConsoleUI;
 
 namespace TetrisConsoleUI
 {
     class TetrisConsoleUI
     {
         private static Game _game;
-        private static  ConsoleDrawing _drawer;
-        private static  System.Timers.Timer _gameTimer;
+        private static ConsoleDrawing _drawer;
+        private static System.Timers.Timer _gameTimer;
         private static int _timerCounter = 0;
         private static readonly int _timerStep = 10;
+        private static RamDrawing _ramDrawer;
 
         static int Main(string[] args)
         {
@@ -20,29 +23,32 @@ namespace TetrisConsoleUI
             Console.CursorVisible = false;
 
             _drawer = new ConsoleDrawing();
-
+            _ramDrawer = new RamDrawing();
             ConsoleDrawing.ShowControls();
 
             Console.ReadKey(true);
             Console.Clear();
-
-            _game = new Game();
+            
+            _game = new Game(_ramDrawer.Ram.Count, _ramDrawer.Ram.Max(r => r.Count()));
             _game.Start();
             _gameTimer = new System.Timers.Timer(800);
             _gameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             _gameTimer.Start();
 
             _drawer.DrawScene(_game);
+            _ramDrawer.DrawScene(_game);
 
             while (_game.Status != Game.GameStatus.Finished)
             {
                 if (Console.KeyAvailable)
                 {
-                    KeyPressedHandler( Console.ReadKey(true) );
+                    KeyPressedHandler(Console.ReadKey(true));
                     _drawer.DrawScene(_game);
+                    _ramDrawer.DrawScene(_game);
                     _gameTimer.Enabled = true;
                 }
             }
+
             _gameTimer.Stop();
             _drawer.ShowGameOver(_game);
 
@@ -73,6 +79,7 @@ namespace TetrisConsoleUI
                         _game.MoveDown();
                         _gameTimer.Enabled = false;
                     }
+
                     break;
                 case ConsoleKey.Spacebar:
                     if (_game.Status != Game.GameStatus.Paused)
@@ -110,7 +117,8 @@ namespace TetrisConsoleUI
                     else
                     {
                         _drawer.DrawScene(_game);
-                        if ( _timerCounter >= ( 1000 - (_game.Lines * 10) ) )
+                        _ramDrawer.DrawScene(_game);
+                        if (_timerCounter >= (1000 - (_game.Lines * 10)))
                         {
                             _gameTimer.Interval -= 50;
                             _timerCounter = 0;

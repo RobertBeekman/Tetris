@@ -62,15 +62,15 @@ namespace TetrisConsoleUI
         //Intro
         public static void ShowControls()
         {
-            Console.Write(@"C# Console Tetris
+            Console.Write(@"C# Console Tetris - Width Corsair RAM support!
     =======================================
 
     Controls:
-    [→]       Move Block Right
-    [←]       Move Block Left
+    [>]       Move Block Right
+    [<]       Move Block Left
     [SPACE]   Smash Bloock down
-    [↓]       Push block down 1 Unit
-    [↑]       Turn Clockwise
+    [v]       Push block down 1 Unit
+    [^]       Turn Clockwise
     [G]       Turn ghost Block on and off (Default on)
     [N]       Turn Next Block on and off
     [P]       Pause Game

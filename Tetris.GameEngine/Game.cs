@@ -35,9 +35,9 @@ namespace Tetris.GameEngine
 
         #region Constructors
 
-        public Game()
+        public Game(int width, int height)
         {
-            _gameBoard = new Board(_default_board_width, _default_board_height);
+            _gameBoard = new Board(width, height);
             
             _currPiece = null;
             _nextPiece = null;
